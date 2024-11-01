@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "cmath": "cpp",
+        "random": "cpp",
+        "core": "cpp",
+        "cfloat": "cpp",
+        "iostream": "cpp",
+        "dense": "cpp"
+    },
+    "cSpell.words": [
+        "Eigen"
+    ]
+}
