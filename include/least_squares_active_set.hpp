@@ -6,6 +6,7 @@
 #include <limits>
 #include <cmath>
 
+// min |A*u - b|^2, u -> N*1, b -> M*1, A -> M*N
 template <size_t N, size_t M>
 class LeastSquaresActiveSet {
 public:
