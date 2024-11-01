@@ -5,11 +5,11 @@
 #include "least_squares_active_set.hpp"
 
 int main() {
-    // Test Case 1: 基本测试
+    // Test Case 1: Basic Test
     {
         const size_t N = 3;
         const size_t M = 2;
-        std::cout << "Test Case 1: 基本测试\n";
+        std::cout << "Test Case 1: Basic Test\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -23,15 +23,15 @@ int main() {
         Eigen::Matrix<float, M, 1> b;
         b << 7, 8;
         Eigen::Matrix<float, M, N> A;
-        A << 1,2,3,
-             4,5,6;
+        A << 1, 2, 3,
+             4, 5, 6;
 
         solver.define_problem(u_max, u_min, u_init, b, A);
         solver.iterate_update();
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
@@ -39,11 +39,11 @@ int main() {
         std::cout << "Residual norm ||A*u - b||: " << residual.norm() << "\n\n";
     }
 
-    // Test Case 2: 收紧的约束
+    // Test Case 2: Tightened Constraints
     {
         const size_t N = 3;
         const size_t M = 2;
-        std::cout << "Test Case 2: 收紧的约束\n";
+        std::cout << "Test Case 2: Tightened Constraints\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -57,15 +57,15 @@ int main() {
         Eigen::Matrix<float, M, 1> b;
         b << 7, 8;
         Eigen::Matrix<float, M, N> A;
-        A << 1,2,3,
-             4,5,6;
+        A << 1, 2, 3,
+             4, 5, 6;
 
         solver.define_problem(u_max, u_min, u_init, b, A);
         solver.iterate_update();
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
@@ -73,11 +73,11 @@ int main() {
         std::cout << "Residual norm ||A*u - b||: " << residual.norm() << "\n\n";
     }
 
-    // Test Case 3: 超定系统
+    // Test Case 3: Overdetermined System
     {
         const size_t N = 2;
         const size_t M = 4;
-        std::cout << "Test Case 3: 超定系统\n";
+        std::cout << "Test Case 3: Overdetermined System\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -91,17 +91,17 @@ int main() {
         Eigen::Matrix<float, M, 1> b;
         b << 2, 3, 5, 7;
         Eigen::Matrix<float, M, N> A;
-        A << 1,2,
-             2,1,
-             3,4,
-             4,3;
+        A << 1, 2,
+             2, 1,
+             3, 4,
+             4, 3;
 
         solver.define_problem(u_max, u_min, u_init, b, A);
         solver.iterate_update();
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
@@ -109,11 +109,11 @@ int main() {
         std::cout << "Residual norm ||A*u - b||: " << residual.norm() << "\n\n";
     }
 
-    // Test Case 4: 欠定系统
+    // Test Case 4: Underdetermined System
     {
         const size_t N = 4;
         const size_t M = 2;
-        std::cout << "Test Case 4: 欠定系统\n";
+        std::cout << "Test Case 4: Underdetermined System\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -127,15 +127,15 @@ int main() {
         Eigen::Matrix<float, M, 1> b;
         b << 10, 14;
         Eigen::Matrix<float, M, N> A;
-        A << 1,2,1,2,
-             2,1,2,1;
+        A << 1, 2, 1, 2,
+             2, 1, 2, 1;
 
         solver.define_problem(u_max, u_min, u_init, b, A);
         solver.iterate_update();
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
@@ -143,11 +143,11 @@ int main() {
         std::cout << "Residual norm ||A*u - b||: " << residual.norm() << "\n\n";
     }
 
-    // Test Case 5: 仅有上界
+    // Test Case 5: Upper Bound Only
     {
         const size_t N = 3;
         const size_t M = 3;
-        std::cout << "Test Case 5: 仅有上界\n";
+        std::cout << "Test Case 5: Upper Bound Only\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -167,7 +167,7 @@ int main() {
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
@@ -175,11 +175,11 @@ int main() {
         std::cout << "Residual norm ||A*u - b||: " << residual.norm() << "\n\n";
     }
 
-    // Test Case 6: 仅有下界
+    // Test Case 6: Lower Bound Only
     {
         const size_t N = 3;
         const size_t M = 3;
-        std::cout << "Test Case 6: 仅有下界\n";
+        std::cout << "Test Case 6: Lower Bound Only\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -199,7 +199,7 @@ int main() {
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
@@ -207,11 +207,11 @@ int main() {
         std::cout << "Residual norm ||A*u - b||: " << residual.norm() << "\n\n";
     }
 
-    // Test Case 7: 无约束
+    // Test Case 7: No Constraints
     {
         const size_t N = 3;
         const size_t M = 2;
-        std::cout << "Test Case 7: 无约束\n";
+        std::cout << "Test Case 7: No Constraints\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -225,15 +225,15 @@ int main() {
         Eigen::Matrix<float, M, 1> b;
         b << 7, 8;
         Eigen::Matrix<float, M, N> A;
-        A << 1,2,3,
-             4,5,6;
+        A << 1, 2, 3,
+             4, 5, 6;
 
         solver.define_problem(u_max, u_min, u_init, b, A);
         solver.iterate_update();
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
@@ -241,11 +241,11 @@ int main() {
         std::cout << "Residual norm ||A*u - b||: " << residual.norm() << "\n\n";
     }
 
-    // Test Case 8: 变量为负数
+    // Test Case 8: Negative Variables
     {
         const size_t N = 2;
         const size_t M = 2;
-        std::cout << "Test Case 8: 变量为负数\n";
+        std::cout << "Test Case 8: Negative Variables\n";
 
         LeastSquaresActiveSet<N, M> solver;
         solver.init_solver(200);
@@ -259,15 +259,15 @@ int main() {
         Eigen::Matrix<float, M, 1> b;
         b << -3, -4;
         Eigen::Matrix<float, M, N> A;
-        A << 1,2,
-             3,4;
+        A << 1, 2,
+             3, 4;
 
         solver.define_problem(u_max, u_min, u_init, b, A);
         solver.iterate_update();
 
         Eigen::Matrix<float, N, 1> result = solver.get_result();
 
-        // 验证并输出结果
+        // Verify and output results
         std::cout << "Optimal solution u:\n" << result.transpose() << std::endl;
         bool constraints_satisfied = ((result.array() >= u_min.array()).all() && (result.array() <= u_max.array()).all());
         std::cout << "u_min <= u <= u_max: " << std::boolalpha << constraints_satisfied << std::endl;
