@@ -71,7 +71,7 @@ void LeastSquaresActiveSet<N, M>::iterate_update() {
 
         // Zero out columns corresponding to active variables
         for (size_t i = 0; i < N; i++) {
-            if (_w_act(i) != 0) {
+            if (_w_act(i) == 1 || _w_act(i) == -1) {
                 Aff.col(i).setZero();
                 Afd.col(i).setZero();
             }
@@ -95,7 +95,7 @@ void LeastSquaresActiveSet<N, M>::iterate_update() {
 
         // Zero out direction for active variables
         for (size_t i = 0; i < N; i++) {
-            if (_w_act(i) != 0) {
+            if (_w_act(i) == 1 || _w_act(i) == -1) {
                 p(i) = 0.0f;
             }
         }
@@ -128,14 +128,15 @@ void LeastSquaresActiveSet<N, M>::iterate_update() {
 
         if (!feasible) {
             for (size_t i = 0; i < N; i++) {
-                if (std::fabs((_u(i) - _u_min(i))) < std::numeric_limits<float>::epsilon()) {
-                    _w_act(i) = -1;
-                    _u(i) = _u_min(i);
-                } else if (std::fabs((_u(i) - _u_max(i))) < std::numeric_limits<float>::epsilon()) {
-                    _w_act(i) = 1;
-                    _u(i) = _u_max(i);
+                if (std::fabs(ap(i) - ap_min) < std::numeric_limits<float>::epsilon()) {
+                    if (p(i) > 0) {
+                        _w_act(i) = 1;
+                    } else if (p(i) < 0) {
+                        _w_act(i) = -1;
+                    }
                 }
             }
+
         } else {
             Eigen::Matrix<float, N, 1> la = _A.transpose() * _d;
 
@@ -144,7 +145,7 @@ void LeastSquaresActiveSet<N, M>::iterate_update() {
             float la_min = 0.0f;
 
             for (size_t i = 0; i < N; i++) {
-                if (_w_act(i) != 0) {
+                if (_w_act(i) == 1 || _w_act(i) == -1) {
                     float lambda = la(i) * _w_act(i);
                     if (lambda < la_min) {
                         la_min = lambda;
@@ -157,7 +158,7 @@ void LeastSquaresActiveSet<N, M>::iterate_update() {
                 return; // Optimal solution found
             } else {
                 for (size_t i = 0; i < N; i++) {
-                    if (_w_act(i) != 0) {
+                    if (_w_act(i) == 1 || _w_act(i) == -1) {
                         float lambda = la(i) * _w_act(i);
                         if (std::fabs(lambda - la_min) < std::numeric_limits<float>::epsilon()) {
                             _w_act(i) = 0; // Release variable
